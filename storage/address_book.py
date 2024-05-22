@@ -199,7 +199,7 @@ class AddressBook(UserDict):
             date = date.replace(day=date.day + 1)
         return date
 
-    def get_upcoming_birthdays(self):
+    def get_upcoming_birthdays(self, birthday_days:int=None):
         """Get upcoming birthdays for the next week from the address book"""
         today = datetime.today().date()
         upcoming_birthdays = []
@@ -207,7 +207,7 @@ class AddressBook(UserDict):
             if record.birthday is None:
                 continue
             next_birthday = self.get_next_birthday(today, record.birthday.value)
-            if (next_birthday - today).days <= 7:
+            if (next_birthday - today).days <= birthday_days:
                 upcoming_birthdays.append({'name': record.name, 'congratulation_date': self.get_next_weekday(next_birthday).strftime("%Y.%m.%d")})
         return upcoming_birthdays
     
