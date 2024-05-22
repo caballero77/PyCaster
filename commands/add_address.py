@@ -4,7 +4,7 @@ from typing import Tuple
 from commands.types import Command
 from commands.event import Event, EventType
 from commands.errors import MissingArgumentsError, InvalidArgumentsError, input_error
-from storage.address_book import AddressBook, Record, Phone
+from storage.address_book import AddressBook
 
 def add_address(address_book: AddressBook) -> Command:
     """Returns the 'add-address' command"""
@@ -18,7 +18,7 @@ def add_address(address_book: AddressBook) -> Command:
 
     @input_error
     def validate(command: list[str]) -> Tuple[bool, Event]:
-        """Check if the command has two correct arguments.
+        """Check if the command has correct arguments.
         
         Args:
             command (list[str]): The command to validate."""
@@ -33,11 +33,11 @@ def add_address(address_book: AddressBook) -> Command:
                 return (True, None)
 
     def action(command: list[str]) -> Event:
-        """Add a email to the contact.
+        """Add a address to the contact.
         
         Args:
             command (list[str]): The command to execute. First element is the name of the contact,
-            second element is the email.
+            second element is the address.
         """
         record = address_book.find(command[0])
         address = " ".join(command[1:])

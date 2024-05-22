@@ -61,6 +61,7 @@ class Phone(Field):
         return bool(re.match(r"^(\+38)?(0\d{9})$", value))
     
 class Birthday(Field):
+    """Class for birthday field of the record"""
     def __init__(self, value):
         if not self.validate(value):
             raise ValueError('Invalid date format. Use DD.MM.YYYY')
@@ -69,6 +70,13 @@ class Birthday(Field):
     
     @staticmethod
     def validate(value: str) -> bool:
+        """Validate birthday
+        
+        Args:
+            value: str: birthday in format DD.MM.YYYY
+        
+        Returns:
+            bool: True if birthday is valid, False otherwise"""
         try:
             datetime.strptime(value, "%d.%m.%Y")
             return True
@@ -98,20 +106,34 @@ class Record:
         return True
     
     def add_birthday(self, birthday: str) -> bool:
+        """Add birthday to the record
+        
+        Args:
+            birthday: str: birthday in format DD.MM.YYYY
+            
+        Returns:
+            bool: True if birthday was added, False if birthday is invalid"""
         try:
             self.birthday = Birthday(birthday)
         except ValueError:
             return False
         return True
     
-    def add_address(self, address: str) -> bool:
-        try:
-            self.address = Address(address)
-        except ValueError:
-            return False
-        return True
+    def add_address(self, address: str):
+        """Add address to the record
+
+        Args:
+            address: str: address"""
+        self.address = Address(address)
     
     def add_email(self, email: str) -> bool:
+        """Add email to the record
+        
+        Args:
+            email: str: email
+            
+        Returns:
+            bool: True if email was added, False if email is invalid"""
         try:
             self.email = Email(email)
         except ValueError:
