@@ -11,6 +11,8 @@ from commands.hello import hello
 from commands.add_birthday import add_birthday
 from commands.show_birthday import show_birthday
 from commands.birthdays import birthdays
+from commands.add_email import add_email
+from commands.add_address import add_address
 
 def build_handler(command: Command) -> Handler:
     """Builds a handler from a command."""
@@ -34,6 +36,8 @@ def get_handlers(dependencies: Dependencies):
         add_birthday(dependencies.address_book),
         show_birthday(dependencies.address_book),
         birthdays(dependencies.address_book),
+        add_email(dependencies.address_book),
+        add_address(dependencies.address_book),
         hello,
         invalid_input,
     ]))

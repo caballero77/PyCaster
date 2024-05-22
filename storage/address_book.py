@@ -17,6 +17,30 @@ class Name(Field):
     """Class for name field of the record"""
     pass
 
+class Address(Field):
+    """Class for address field of the record"""
+    pass
+
+class Email(Field):
+    """Class for email field of the record"""
+    def __init__(self, value):
+        if not self.validate(value):
+            raise ValueError('Invalid email')
+        
+        super().__init__(value)
+
+    @staticmethod
+    def validate(value: str) -> bool:
+        """Validate email
+        
+        Args:
+            value: str: email
+        
+        Returns:
+            bool: True if email is valid, False otherwise"""
+        # TODO: implement email validation
+        return True
+
 class Phone(Field):
     """Class for phone field of the record"""
     def __init__(self, value):
@@ -57,6 +81,8 @@ class Record:
         self.name: str = Name(name)
         self.phones: list[str] = []
         self.birthday: Birthday = None
+        self.email: Email = None
+        self.address: Address = None
 
     def add_phone(self, phone: str) -> bool:
         """Add phone to the record
@@ -74,6 +100,20 @@ class Record:
     def add_birthday(self, birthday: str) -> bool:
         try:
             self.birthday = Birthday(birthday)
+        except ValueError:
+            return False
+        return True
+    
+    def add_address(self, address: str) -> bool:
+        try:
+            self.address = Address(address)
+        except ValueError:
+            return False
+        return True
+    
+    def add_email(self, email: str) -> bool:
+        try:
+            self.email = Email(email)
         except ValueError:
             return False
         return True
@@ -123,7 +163,9 @@ class Record:
     def __str__(self):
         return f"Contact name: {self.name.value} " + \
             (f"birthday: {self.birthday.value}, " if self.birthday else "") + \
-            (f"phones: {'; '.join(p.value for p in self.phones)}" if self.phones else "")
+            (f"phones: {'; '.join(p.value for p in self.phones)} " if self.phones else "") + \
+            (f"email: {self.email.value} " if self.email else "") + \
+            (f"address: {self.address.value} " if self.address else "")
 
 class AddressBook(UserDict):
     """Class for address book, which contains records of contacts"""
