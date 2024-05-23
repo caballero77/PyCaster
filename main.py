@@ -18,12 +18,12 @@ def build_dependencies(filename: Path):
     if err:
         print(err)
         sys.exit(1)
-    print(f"Data has been loaded from file: {filename.name}")
+    print(f"Data has been loaded from file: {filename}")
     try:
         yield Dependencies(address_book)
     finally:
         address_book.save_data(filename)
-        print(f"Data has been saved to file: {filename.name}")
+        print(f"Data has been saved to file: {filename}")
             
 
 def main(filename: Path):
@@ -33,5 +33,12 @@ def main(filename: Path):
         
 
 if __name__ == "__main__":
-    filename = Path(sys.argv[1] if len(sys.argv) > 1 else "address_book.pickle")
+    file_name = 'address_book.pickle'
+    default_directory = Path.home() / 'my_address_book'
+    filename = default_directory / file_name
+
+    if not filename.exists():
+        filename.parent.mkdir(parents=True, exist_ok=True)
+        filename = filename.parent / file_name
+
     main(filename)
