@@ -310,3 +310,26 @@ class AddressBook(UserDict):
             return None
         except Exception as e:
             return str(e)
+        
+    def search(self, search_str: str):
+        """Search for records in the address book by name
+        
+        Args:
+            search_str: str: search string
+        
+        Returns:
+            list: list of records that match the search string"""
+        result_by_name = [record for record in self.data.values() if search_str in record.name.value]
+        result_by_address = [record for record in self.data.values() if (record.address and (search_str in record.address.value))]
+
+        return set(result_by_name + result_by_address)
+    
+    def search_by_birth_year(self, year: int):
+        """Search for records in the address book by birth year
+        
+        Args:
+            year: int: birth year
+        
+        Returns:
+            list: list of records that match the birth year"""
+        return [record for record in self.data.values() if record.birthday and record.birthday.value.year == year]
