@@ -29,11 +29,11 @@ def add_email(address_book: AddressBook) -> Command:
                 raise MissingArgumentsError("email")
             case 2:
                 if not address_book.has_record(command[0]):
-                    raise InvalidArgumentsError(f"Contact you are trying to add email to contact that does not exist: {command[0]}")
-                
+                    raise InvalidArgumentsError(f"Contact you are trying to add email to does not exist: {command[0]}")
                 if not Email.validate(command[1]):
                     raise InvalidArgumentsError(f"Invalid email: {command[1]}")
-
+                if not address_book.is_email_unique(command[1]): 
+                    raise InvalidArgumentsError(f"Email {command[1]} already exists in the address book.")
                 return (True, None)
             case _:
                 raise InvalidArgumentsError("add command takes only one or two arguments.")
