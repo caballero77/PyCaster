@@ -313,6 +313,19 @@ class AddressBook(UserDict):
                 return False 
         return True 
     
+    def is_phone_unique(self, phone: str) -> bool:
+        """Check if phone is unique in the address book
+        
+        Args:
+            phone: str: phone number
+            
+        Returns:
+            bool: True if phone is unique, False if phone already exists in the address book"""
+        for record in self.data.values():
+            if record.find_phone(phone):
+                return False
+        return True
+    
     @staticmethod
     def get_next_birthday(today, birth_date):
         """Get next birthday date for user. If birthday is already passed this year, return next year's date.

@@ -32,6 +32,8 @@ def change_contact(address_book: AddressBook) -> Command:
         if field_type == "phone":
             if not Phone.validate(new_value):
                 raise InvalidArgumentsError(f"Invalid phone number: {new_value}")
+            if not address_book.is_phone_unique(new_value):
+                raise InvalidArgumentsError(f"Phone number {new_value} already exists in the address book.")
         elif field_type == "email":
             if not Email.validate(new_value):
                 raise InvalidArgumentsError(f"Invalid email: {new_value}")
