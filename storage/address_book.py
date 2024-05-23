@@ -38,8 +38,7 @@ class Email(Field):
         
         Returns:
             bool: True if email is valid, False otherwise"""
-        # TODO: implement email validation
-        return True
+        return bool(re.match(r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", value))
 
 class Phone(Field):
     """Class for phone field of the record"""
@@ -59,7 +58,7 @@ class Phone(Field):
         Returns:
             bool: True if phone number is valid, False otherwise"""
         return bool(re.match(r"^(\+38)?(0\d{9})$", value))
-    
+
 class Birthday(Field):
     """Class for birthday field of the record"""
     def __init__(self, value):
@@ -87,7 +86,7 @@ class Record:
     """Class for record, which contains name and phones of the contact"""
     def __init__(self, name):
         self.name: str = Name(name)
-        self.phones: list[str] = []
+        self.phones: list[Phone] = []
         self.birthday: Birthday = None
         self.email: Email = None
         self.address: Address = None
@@ -181,6 +180,66 @@ class Record:
             if phone.value == phone_number:
                 return phone
         return None
+    
+    def edit_birthday(self, new_birthday: str) -> bool:
+        """Edit birthday in the record
+        
+        Args:
+            new_birthday: str: new birthday in format DD.MM.YYYY
+        
+        Returns:
+            bool: True if birthday was edited, False if invalid format"""
+        try:
+            self.birthday = Birthday(new_birthday)
+        except ValueError:
+            return False
+        return True
+
+    def delete_birthday(self) -> bool:
+        """Delete birthday from the record"""
+        if self.birthday:
+            self.birthday = None
+            return True
+        return False
+    
+    def edit_address(self, new_address: str) -> bool:
+        """Edit address in the record
+        
+        Args:
+            new_address: str: new address
+        
+        Returns:
+            bool: True if address was edited"""
+        self.address = Address(new_address)
+        return True
+
+    def delete_address(self) -> bool:
+        """Delete address from the record"""
+        if self.address:
+            self.address = None
+            return True
+        return False
+
+    def edit_email(self, new_email: str) -> bool:
+        """Edit email in the record
+        
+        Args:
+            new_email: str: new email
+        
+        Returns:
+            bool: True if email was edited, False if invalid format"""
+        try:
+            self.email = Email(new_email)
+        except ValueError:
+            return False
+        return True
+
+    def delete_email(self) -> bool:
+        """Delete email from the record"""
+        if self.email:
+            self.email = None
+            return True
+        return False
     
     def __str__(self):
         return f"Contact name: {self.name.value} " + \
