@@ -33,20 +33,12 @@ def main(filename: Path):
         
 
 if __name__ == "__main__":
-
-    #filename = Path(sys.argv[1] if len(sys.argv) > 1 else "address_book.pickle")
-    
-    # Встановлення шляху до файлу
     file_name = 'address_book.pickle'
-    default_directory = Path.cwd() / 'my_address_book'
-    #default_directory = Path.home() / 'my_address_book_dir2'
+    default_directory = Path.home() / 'my_address_book'
     filename = default_directory / file_name
 
-    # Перевірка, чи файл знаходиться у зазначеній папці
     if not filename.exists():
-        # Якщо ні, створюємо директорію
         filename.parent.mkdir(parents=True, exist_ok=True)
-        # Оновлюємо шлях до файлу
         filename = filename.parent / file_name
 
     main(filename)
