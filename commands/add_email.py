@@ -1,10 +1,10 @@
 """This module contains the 'add' command. It adds a new contact to the storage."""
-
+import re
 from typing import Tuple
 from commands.types import Command
 from commands.event import Event, EventType
 from commands.errors import MissingArgumentsError, InvalidArgumentsError, input_error
-from storage.address_book import AddressBook, Record, Phone
+from storage.address_book import AddressBook, Email
 
 def add_email(address_book: AddressBook) -> Command:
     """Returns the 'add-email' command"""
@@ -29,7 +29,11 @@ def add_email(address_book: AddressBook) -> Command:
                 raise MissingArgumentsError("email")
             case 2:
                 if not address_book.has_record(command[0]):
-                    raise InvalidArgumentsError(f"Contact you are trying to add email to does not exist: {command[0]}")
+                    raise InvalidArgumentsError(f"Contact you are trying to add email to contact that does not exist: {command[0]}")
+                
+                if not Email.validate(command[1]):
+                    raise InvalidArgumentsError(f"Invalid email: {command[1]}")
+
                 return (True, None)
             case _:
                 raise InvalidArgumentsError("add command takes only one or two arguments.")
