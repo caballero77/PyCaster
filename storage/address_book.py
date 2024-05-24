@@ -300,6 +300,32 @@ class AddressBook(UserDict):
             bool: True if record exists, False if record not found"""
         return self.data.get(name) is not None
     
+    def is_email_unique(self, email: str) -> bool: 
+        """Check if email is unique in the address book
+        
+        Args:
+            email: str: email
+            
+        Returns:
+            bool: True if email is unique, False if email already exists in the address book"""
+        for record in self.data.values(): 
+            if record.email and record.email.value == email: 
+                return False 
+        return True 
+    
+    def is_phone_unique(self, phone: str) -> bool:
+        """Check if phone is unique in the address book
+        
+        Args:
+            phone: str: phone number
+            
+        Returns:
+            bool: True if phone is unique, False if phone already exists in the address book"""
+        for record in self.data.values():
+            if record.find_phone(phone):
+                return False
+        return True
+    
     @staticmethod
     def get_next_birthday(today, birth_date):
         """Get next birthday date for user. If birthday is already passed this year, return next year's date.

@@ -32,6 +32,8 @@ def add_contact(address_book: AddressBook) -> Command:
             case 2:
                 if not Phone.validate(command[1]):
                     raise InvalidArgumentsError(f"Invalid phone number: {command[1]}")
+                if not address_book.is_phone_unique(command[1]):
+                    raise InvalidArgumentsError(f"Phone number {command[1]} already exists in the address book.")
                 return (True, None)
             case _:
                 raise InvalidArgumentsError("add command takes only one or two arguments.")
