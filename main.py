@@ -5,6 +5,7 @@ from handler import compose_handlers
 from commands.handlers import get_handlers
 from commands.types import Dependencies
 from storage.address_book import AddressBook
+from storage.note_book import NoteBook
 from contextlib import contextmanager
 
 def build_processor(dependencies: Dependencies):
@@ -14,13 +15,14 @@ def build_processor(dependencies: Dependencies):
 
 @contextmanager
 def build_dependencies(filename: Path):
+    note_book = NoteBook()
     address_book, err = AddressBook.load_data(filename) if filename else (AddressBook(), None)
     if err:
         print(err)
         sys.exit(1)
     print(f"Data has been loaded from file: {filename}")
     try:
-        yield Dependencies(address_book)
+        yield Dependencies(address_book, note_book)
     finally:
         address_book.save_data(filename)
         print(f"Data has been saved to file: {filename}")

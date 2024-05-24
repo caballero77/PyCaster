@@ -77,6 +77,39 @@ class NoteBook(UserDict):
             return False
         del self.data[title]
         return True
+    
+    def rename_note(self, old_title, new_title):
+        """Rename a note in the notebook.
+        
+        Args:
+            old_title: str: the title of the note to rename
+            new_title: str: the new title of the note
+            
+        Returns:
+            bool: False if a note with the old title is not found or a note with the new title already exists, True otherwise
+        """
+        if old_title not in self.data:
+            return False
+        if new_title in self.data:
+            return False
+        self.data[new_title] = self.data.pop(old_title)
+        self.data[new_title].change_title(new_title)
+        return True
+    
+    def update_note_body(self, title, body):
+        """Update the body of a note.
+        
+        Args:
+            title: str: the title of the note to update
+            body: str: the new body of the note
+            
+        Returns:
+            bool: False if a note with the given title is not found, True otherwise
+        """
+        if title not in self.data:
+            return False
+        self.data[title].change_body(body)
+        return True
 
     def find_note_by_title(self, title):
         """Find a note by its title.
