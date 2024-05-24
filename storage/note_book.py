@@ -41,8 +41,9 @@ class NoteBook(UserDict):
             ValueError: if a note with the same title already exists
         """
         if note.title in self.data:
-            raise ValueError(f'Note with title "{note.title}" already exists.')
+            return False
         self.data[note.title] = note
+        return True
 
     def remove_note(self, title):
         """Remove a note from the notebook by its title.
@@ -54,8 +55,9 @@ class NoteBook(UserDict):
             KeyError: if a note with the given title is not found
         """
         if title not in self.data:
-            raise KeyError(f'Note with title "{title}" not found.')
+            return False
         del self.data[title]
+        return True
 
     def find_note_by_title(self, title):
         """Find a note by its title.
