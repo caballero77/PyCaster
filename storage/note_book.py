@@ -37,8 +37,8 @@ class NoteBook(UserDict):
         Args:
             note: Note: the note to add
             
-        Raises:
-            ValueError: if a note with the same title already exists
+        Returns:
+            bool: False if a note with the same title already exists, True otherwise
         """
         if note.title in self.data:
             return False
@@ -51,8 +51,8 @@ class NoteBook(UserDict):
         Args:
             title: str: the title of the note to remove
             
-        Raises:
-            KeyError: if a note with the given title is not found
+        Returns:
+            bool: False if a note with the given title is not found, True otherwise
         """
         if title not in self.data:
             return False
