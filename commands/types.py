@@ -3,6 +3,7 @@
 from typing import Callable, Tuple, NamedTuple
 from commands.event import Event
 from storage.address_book import AddressBook
+from storage.note_book import NoteBook
 
 CommandSelector = Callable[[list[str]], bool]
 """A function that selects a command."""
@@ -22,4 +23,6 @@ Handler = Callable[[list[str], Command], Command | Event]
 class Dependencies(NamedTuple):
     """A named tuple that contains the external dependencies for the commands."""
     address_book: AddressBook
-    """The storage to use for the commands."""
+    """The storage to use for the contacts related commands."""
+    note_book: NoteBook
+    """The storage to use for the notes related commands."""

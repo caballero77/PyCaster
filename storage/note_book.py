@@ -2,14 +2,15 @@ from datetime import datetime
 from collections import UserDict
 
 class Note: 
-    """Class for note, which contains note title, date and time when a note was created, and note body"""
-    def __init__(self, title, datetime, body):
+    """Class for note, which contains note title, date and time when a note was created, note body, and tags"""
+    def __init__(self, title, datetime, body, tags=None):
         self.title = title
         self.datetime = datetime
         self.body = body
+        self.tags = tags if tags is not None else []
 
     def __str__(self):
-        return f'{self.title} {self.datetime} {self.body}'
+        return f'{self.title} {self.datetime} {self.body} Tags: {", ".join(self.tags)}'
     
     def change_title(self, title):
         """Change the title of the note
@@ -26,6 +27,24 @@ class Note:
             body: str: new body of the note
         """
         self.body = body
+    
+    def add_tag(self, tag):
+        """Add a tag to the note
+        
+        Args:
+            tag: str: the tag to add
+        """
+        if tag not in self.tags:
+            self.tags.append(tag)
+    
+    def remove_tag(self, tag):
+        """Remove a tag from the note
+        
+        Args:
+            tag: str: the tag to remove
+        """
+        if tag in self.tags:
+            self.tags.remove(tag)
 
 class NoteBook(UserDict):
     def __init__(self):
@@ -58,6 +77,39 @@ class NoteBook(UserDict):
             return False
         del self.data[title]
         return True
+    
+    def rename_note(self, old_title, new_title):
+        """Rename a note in the notebook.
+        
+        Args:
+            old_title: str: the title of the note to rename
+            new_title: str: the new title of the note
+            
+        Returns:
+            bool: False if a note with the old title is not found or a note with the new title already exists, True otherwise
+        """
+        if old_title not in self.data:
+            return False
+        if new_title in self.data:
+            return False
+        self.data[new_title] = self.data.pop(old_title)
+        self.data[new_title].change_title(new_title)
+        return True
+    
+    def update_note_body(self, title, body):
+        """Update the body of a note.
+        
+        Args:
+            title: str: the title of the note to update
+            body: str: the new body of the note
+            
+        Returns:
+            bool: False if a note with the given title is not found, True otherwise
+        """
+        if title not in self.data:
+            return False
+        self.data[title].change_body(body)
+        return True
 
     def find_note_by_title(self, title):
         """Find a note by its title.
@@ -79,7 +131,7 @@ class NoteBook(UserDict):
         return [str(note) for note in self.data.values()]
 
     def search_by_keyword(self, keyword):
-        """Search for notes containing the keyword in their title or body.
+        """Search for notes containing the keyword in their title, body, or tags.
         
         Args:
             keyword: str: the keyword to search for
@@ -87,4 +139,18 @@ class NoteBook(UserDict):
         Returns:
             list: a list of string representations of notes containing the keyword
         """
-        return [str(note) for note in self.data.values() if keyword.lower() in note.body.lower() or keyword.lower() in note.title.lower()]   
+        return [str(note) for note in self.data.values() 
+                if keyword.lower() in note.body.lower() 
+                or keyword.lower() in note.title.lower()
+                or keyword.lower() in [tag.lower() for tag in note.tags]]
+
+    def search_by_tag(self, tag):
+        """Search for notes containing a specific tag.
+        
+        Args:
+            tag: str: the tag to search for
+            
+        Returns:
+            list: a list of string representations of notes containing the tag
+        """
+        return [str(note) for note in self.data.values() if tag.lower() in [t.lower() for t in note.tags]]
