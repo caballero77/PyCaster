@@ -45,6 +45,6 @@ def note_rename(note_book: NoteBook) -> Command:
             second element is the new title of the note."""
         note_book.rename_note(command[0], command[1])
 
-        return Event(EventType.PRINT, {"print": f'Note "{command[0]}" renamed.'})
+        return Event(EventType.PRINT, {"print": f'✅ Note "{command[0]}" renamed.'})
 
     return lambda: (select, validate, action)

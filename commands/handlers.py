@@ -4,7 +4,6 @@ from commands.types import Command, Handler, Dependencies
 from commands.exit import exit
 from commands.invalid_input import invalid_input
 from commands.hello import hello
-from commands.contacts.wipe_contact import wipe_contact
 from commands.help import help_command
 from commands.contacts import commands as contacts_commands
 from commands.notes import commands as note_commands

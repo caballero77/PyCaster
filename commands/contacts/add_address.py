@@ -42,6 +42,6 @@ def add_address(address_book: AddressBook) -> Command:
         record = address_book.find(command[0])
         address = " ".join(command[1:])
         record.add_address(address)
-        return Event(EventType.PRINT, {"print": f"Address for {command[0]} added."})
+        return Event(EventType.PRINT, {"print": f"✅ Address for {command[0]} added."})
 
     return lambda: (select, validate, action)

@@ -31,7 +31,7 @@ def add_contact(address_book: AddressBook) -> Command:
                 return (True, None)
             case 2:
                 if not Phone.validate(command[1]):
-                    raise InvalidArgumentsError(f"Invalid phone number: {command[1]}")
+                    raise InvalidArgumentsError(f"Invalid phone number: {command[1]}. Expected format: +1234567890.")
                 if not address_book.is_phone_unique(command[1]):
                     raise InvalidArgumentsError(f"Phone number {command[1]} already exists in the address book.")
                 return (True, None)
@@ -54,5 +54,5 @@ def add_contact(address_book: AddressBook) -> Command:
             if len(command) > 1:
                 record.add_phone(command[1])
             address_book.add_record(record)
-            return Event(EventType.PRINT, {"print": f"Contact {command[0]} added."})
+            return Event(EventType.PRINT, {"print": f"💪 Contact {command[0]} added."})
     return lambda: (select, validate, action)

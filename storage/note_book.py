@@ -1,4 +1,6 @@
-from datetime import datetime
+import pickle
+from pathlib import Path
+from typing import Tuple
 from collections import UserDict
 
 class Note: 
@@ -10,7 +12,7 @@ class Note:
         self.tags = tags if tags is not None else []
 
     def __str__(self):
-        return f'{self.title} {self.datetime} {self.body} Tags: {", ".join(self.tags)}'
+        return f'📒 {self.title}\nCreated: {self.datetime}\n{self.body}\nTags: {", ".join(self.tags)}'
     
     def change_title(self, title):
         """Change the title of the note
@@ -154,3 +156,41 @@ class NoteBook(UserDict):
             list: a list of string representations of notes containing the tag
         """
         return [str(note) for note in self.data.values() if tag.lower() in [t.lower() for t in note.tags]]
+
+    @staticmethod
+    def load_data(file_path: Path) -> Tuple['NoteBook', str]:
+        """Load data from file
+        
+        Args:
+            file_path: str: file path
+            
+        Returns:
+            Tuple[AddressBook, str]: address book object and error message if any"""
+        try:
+            if not file_path.parent.exists():
+                return None, f"Can't find the directory: {file_path.parent}"
+            if not file_path.exists():
+                return NoteBook(), None
+            if file_path.stat().st_size == 0:
+                return NoteBook(), None
+            with open(file_path, 'rb') as file:
+                return pickle.load(file), None
+        except Exception as e:
+            return None, str(e)
+        
+    def save_data(self, file_path: Path) -> str:
+        """Save data to file
+        
+        Args:
+            file_path: str: file path
+            
+        Returns:
+            str: error message if any"""
+        try:
+            if not file_path.exists():
+                file_path.touch()
+            with open(file_path, 'wb') as file:
+                pickle.dump(self, file)
+            return None
+        except Exception as e:
+            return str(e)

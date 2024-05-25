@@ -31,7 +31,7 @@ def add_email(address_book: AddressBook) -> Command:
                 if not address_book.has_record(command[0]):
                     raise InvalidArgumentsError(f"Contact you are trying to add email to does not exist: {command[0]}")
                 if not Email.validate(command[1]):
-                    raise InvalidArgumentsError(f"Invalid email: {command[1]}")
+                    raise InvalidArgumentsError(f"Invalid email: {command[1]}. Expected format: john.smith@example.com")
                 if not address_book.is_email_unique(command[1]): 
                     raise InvalidArgumentsError(f"Email {command[1]} already exists in the address book.")
                 return (True, None)
@@ -47,6 +47,6 @@ def add_email(address_book: AddressBook) -> Command:
         """
         record = address_book.find(command[0])
         record.add_email(command[1])
-        return Event(EventType.PRINT, {"print": f"Email for {command[0]} added."})
+        return Event(EventType.PRINT, {"print": f"✅ Email for {command[0]} added."})
 
     return lambda: (select, validate, action)

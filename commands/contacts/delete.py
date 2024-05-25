@@ -54,6 +54,6 @@ def delete_field(address_book: AddressBook) -> Command:
             case "birthday":
                 record.delete_birthday()
 
-        return Event(EventType.PRINT, {"print": f"{field_type.capitalize()} for contact {name} deleted."})
+        return Event(EventType.PRINT, {"print": f"🚮 {field_type.capitalize()} for contact {name} deleted."})
 
     return lambda: (select, validate, action)

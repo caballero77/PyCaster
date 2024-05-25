@@ -26,7 +26,7 @@ def help_command() -> Command:
             command (list[str]): The command to execute.
         """
         help_text = """
-CLI bot Rezerv++ v[x.x]
+CLI bot PyCaster v[1.0]
 by [team_name]
 
 Supported input commands:

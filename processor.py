@@ -8,6 +8,7 @@ def command_type_to_lowwer(command: list[str]) -> list[str]:
 def cli_processor(handler: Handler):
     """Starts the command-line interface processor."""
     def start_processor():
+        print("Enter a command HELLO to start 🙋")
         while True:
             text_command = command_type_to_lowwer(input("Enter command: ").strip().split(" "))
             event = handler(text_command)
@@ -19,7 +20,7 @@ def cli_processor(handler: Handler):
                     print(event.payload["print"])
                     break
                 case EventType.ERROR:
-                    print(f"Error occurred: {event.payload['message']}")
+                    print(f"❌ Error occurred: {event.payload['message']}")
                     continue
                 case _:
                     continue

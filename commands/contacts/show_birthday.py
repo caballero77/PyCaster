@@ -41,6 +41,6 @@ def show_birthday(address_book: AddressBook) -> Command:
         Returns:
             Event: The event with the type 'PRINT' and the birthday of the contact."""
         record = address_book.find(command[0])
-        return Event(EventType.PRINT, {"print": str(record.birthday)})
+        return Event(EventType.PRINT, {"print": "🎂 " + str(record.birthday)})
 
     return lambda: (select, validate, action)

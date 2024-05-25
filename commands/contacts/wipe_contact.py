@@ -41,6 +41,6 @@ def wipe_contact(address_book: AddressBook) -> Command:
         name = command[1]
         address_book.delete(name)
 
-        return Event(EventType.PRINT, {"print": f"Contact {name} wiped from address book."})
+        return Event(EventType.PRINT, {"print": f"🚮 Contact {name} wiped from address book."})
 
     return lambda: (select, validate, action)

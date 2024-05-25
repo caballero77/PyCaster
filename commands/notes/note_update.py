@@ -42,6 +42,6 @@ def note_update(note_book: NoteBook) -> Command:
             second element is the new body of the note."""
         note_book.update_note_body(command[0], command[1])
 
-        return Event(EventType.PRINT, {"print": f'Note "{command[0]}" updated.'})
+        return Event(EventType.PRINT, {"print": f'✅ Note "{command[0]}" updated.'})
 
     return lambda: (select, validate, action)

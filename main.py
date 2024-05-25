@@ -14,19 +14,30 @@ def build_processor(dependencies: Dependencies):
     return cli_processor(handler)
 
 @contextmanager
-def build_dependencies(filename: Path):
-    note_book = NoteBook()
-    address_book, err = AddressBook.load_data(filename) if filename else (AddressBook(), None)
+def build_dependencies(folder: Path):
+    note_book_file = folder / 'note_book.pickle'
+    if not note_book_file.exists():
+        note_book_file.touch()
+    note_book, err = NoteBook.load_data(note_book_file) if note_book_file else (NoteBook(), None)
     if err:
         print(err)
         sys.exit(1)
-    print(f"Data has been loaded from file: {filename}")
+    
+    address_book_file = folder / 'address_book.pickle'
+    if not address_book_file.exists():
+        address_book_file.touch()
+    address_book, err = AddressBook.load_data(address_book_file) if address_book_file else (AddressBook(), None)
+    if err:
+        print(err)
+        sys.exit(1)
+    print(f"Data has been loaded from file 💾: {address_book_file} and {note_book_file}")
     try:
         yield Dependencies(address_book, note_book)
     finally:
-        address_book.save_data(filename)
-        print(f"Data has been saved to file: {filename}")
-            
+        note_book.save_data(note_book_file)
+        address_book.save_data(address_book_file)
+        print(f"Data has been saved to file 📓: {address_book_file} and {note_book_file}")
+
 
 def main(filename: Path):
     with build_dependencies(filename) as dependencies:
@@ -35,12 +46,9 @@ def main(filename: Path):
         
 
 if __name__ == "__main__":
-    file_name = 'address_book.pickle'
     default_directory = Path.home() / 'my_address_book'
-    filename = default_directory / file_name
 
-    if not filename.exists():
-        filename.parent.mkdir(parents=True, exist_ok=True)
-        filename = filename.parent / file_name
+    if not default_directory.exists():
+        default_directory.mkdir(parents=True, exist_ok=True)
 
-    main(filename)
+    main(default_directory)

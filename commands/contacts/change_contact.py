@@ -32,7 +32,7 @@ def change_contact(address_book: AddressBook) -> Command:
 
         if field_type == "phone":
             if not Phone.validate(new_value):
-                raise InvalidArgumentsError(f"Invalid phone number: {new_value}")
+                raise InvalidArgumentsError(f"Invalid phone number: {new_value}. Examples of correct one: +380123456789 or 0123456789.")
             if not address_book.is_phone_unique(new_value):
                 raise InvalidArgumentsError(f"Phone number {new_value} already exists in the address book.")
         elif field_type == "email":
@@ -76,6 +76,6 @@ def change_contact(address_book: AddressBook) -> Command:
             case "birthday":
                 record.edit_birthday(new_value)
 
-        return Event(EventType.PRINT, {"print": f"Contact {name} changed."})
+        return Event(EventType.PRINT, {"print": f"✅ Contact {name} changed."})
 
     return lambda: (select, validate, action)

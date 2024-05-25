@@ -32,7 +32,7 @@ def add_birthday(address_book: AddressBook) -> Command:
                     raise InvalidArgumentsError(f"Contact you are trying to update not found: {command[0]}")
                 
                 if not Birthday.validate(command[1]):
-                    raise InvalidArgumentsError(f"Invalid date for birthday: {command[1]}")
+                    raise InvalidArgumentsError(f"Invalid date for birthday: {command[1]}. Expected format: YYYY-MM-DD.")
                 
                 return (True, None)
             case _:
@@ -46,6 +46,6 @@ def add_birthday(address_book: AddressBook) -> Command:
         """
         record = address_book.find(command[0])
         record.add_birthday(command[1])
-        return Event(EventType.PRINT, {"print": f"Birthday for {command[0]} added."})
+        return Event(EventType.PRINT, {"print": f"✅ Birthday for {command[0]} added."})
     
     return lambda: (select, valifate, action)

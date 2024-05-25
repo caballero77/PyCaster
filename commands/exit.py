@@ -21,7 +21,7 @@ def validate(command: list[str]) -> Tuple[bool, Event]:
 
 def action(_: list[str]) -> Event:
     """Return an event with the type 'END' and the message 'Goodbye!'."""
-    return Event(EventType.END, {"print": "Goodbye!", "reason": "User exited the program."})
+    return Event(EventType.END, {"print": "Goodbye 🙌!", "reason": "User exited the program."})
 
 def exit() -> Tuple[CommandValidator, CommandAction]:
     """Returns the 'exit' command"""

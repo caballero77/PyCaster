@@ -242,11 +242,11 @@ class Record:
         return False
     
     def __str__(self):
-        return f"Contact name: {self.name.value} " + \
-            (f"birthday: {self.birthday.value}, " if self.birthday else "") + \
-            (f"phones: {'; '.join(p.value for p in self.phones)} " if self.phones else "") + \
-            (f"email: {self.email.value} " if self.email else "") + \
-            (f"address: {self.address.value} " if self.address else "")
+        return f"Contact name: 📄 {self.name.value} " + \
+            (f"birthday:🎂 {self.birthday.value}, " if self.birthday else "") + \
+            (f"phones: 📱 {'; '.join(p.value for p in self.phones)} " if self.phones else "") + \
+            (f"email: 📧 {self.email.value} " if self.email else "") + \
+            (f"address: 🏡 {self.address.value} " if self.address else "")
 
 class AddressBook(UserDict):
     """Class for address book, which contains records of contacts"""
@@ -373,6 +373,8 @@ class AddressBook(UserDict):
             if not file_path.parent.exists():
                 return None, f"Can't find the directory: {file_path.parent}"
             if not file_path.exists():
+                return AddressBook(), None
+            if file_path.stat().st_size == 0:
                 return AddressBook(), None
             with open(file_path, 'rb') as file:
                 return pickle.load(file), None
