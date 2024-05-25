@@ -21,7 +21,7 @@ def validate(command: list[str]) -> Tuple[bool, Event]:
 
 def action(_: list[str]) -> Event:
     """Return an event with the type 'PRINT' and the message 'How can I help you?'."""
-    return Event(EventType.PRINT, {"print": "How can I help you? - Supported commands - enter HELP 👇"})
+    return Event(EventType.PRINT, {"print": "How can I help you? - enter HELP 👇"})
 
 def hello() -> Tuple[CommandValidator, CommandAction]:
     """Returns the 'hello' command"""

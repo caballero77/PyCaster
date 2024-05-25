@@ -1,21 +1,20 @@
-"""This module contains the 'add-note-tags' command. It adds a new note to the storage."""
+"""This module contains the 'delete-tags' command. It adds a new note to the storage."""
 
 from typing import Tuple
-from datetime import datetime
 from commands.types import Command
 from commands.event import Event, EventType
 from commands.errors import MissingArgumentsError, InvalidArgumentsError, input_error
-from storage.note_book import NoteBook, Note
+from storage.note_book import NoteBook
 
-def add_note_tags(note_book: NoteBook) -> Command:
-    """Returns the 'add-note-tags' command"""
+def delete_tags(note_book: NoteBook) -> Command:
+    """Returns the 'delete-tags' command"""
     def select(command: list[str]) -> bool:
-        """Check if the command is 'add-note-tags'
+        """Check if the command is 'delete-tags'
         
         Args:
             command (list[str]): The command to check."""
 
-        return len(command) > 0 and command[0] == "add-note-tags"
+        return len(command) > 0 and command[0] == "delete-tags"
 
     @input_error
     def validate(command: list[str]) -> Tuple[bool, Event]:
@@ -34,7 +33,7 @@ def add_note_tags(note_book: NoteBook) -> Command:
                 return (True, None)
 
     def action(command: list[str]) -> Event:
-        """Add tags to the note with the given title.
+        """Remove tags from the note with the given title.
         
         Args:
             command (list[str]): The command to execute. First element is the title of the note, and the rest are tags."""
@@ -43,7 +42,7 @@ def add_note_tags(note_book: NoteBook) -> Command:
 
         note = note_book.find_note_by_title(title)
         for tag in tags:
-            note.add_tag(tag)
+            note.remove_tag(tag)
         
         return Event(EventType.PRINT, {"print": f'✅ Tags added to the note "{title}".'})
     return lambda: (select, validate, action)

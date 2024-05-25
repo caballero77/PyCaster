@@ -68,7 +68,37 @@ show-birthday [contact_name] - show the birthday of a contact.
 9. Showing upcoming birthdays for the next [user_value] days:
 birthdays [days_range] - show upcoming birthdays in nearest [days].
 
-10. Save data and exit the bot program:
+10. Add a note:
+add-note [note_title] [note_body] - add a new note with a title and body.
+
+11.Rename a note:
+rename-note [old_title] [new_title] - rename a note by title.
+
+12. Update a note:
+update-note [note_title] [note_body] - update a note by title.
+
+13. Show all notes:
+show-notes - show all notes.
+
+14. Delete a note:
+delete-note [note_title] - delete a note by title.
+
+15.get note by title:
+get-note [note_title] - get note by title.
+
+16. Add note tags:
+add-tags [note_title] [tags] - add a tag to a note.
+
+17. Delete note tags:
+delete-tags [note_title] [tags] - delete a tag from a note.
+
+18. Search notes by keyword:
+note-search keyword [keyword] - search notes by keyword.
+
+19. Search notes by tag:
+note-search tag [tag] - search notes by tag.
+
+20. Save data and exit the bot program:
 exit or close - exit the program .
 """
 
