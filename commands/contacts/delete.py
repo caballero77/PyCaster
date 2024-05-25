@@ -21,10 +21,10 @@ def delete_field(address_book: AddressBook) -> Command:
         
         Args:
             command (list[str]): The command to validate."""
-        if len(command) != 3:
-            raise MissingArgumentsError("name and field type.")
+        if len(command) != 2:
+            raise MissingArgumentsError("needs arguments of [name] and [field type] that must be deleted.")
 
-        name, field_type = command[1:]
+        name, field_type = command[0], command[1]
 
         if not address_book.has_record(name):
             raise InvalidArgumentsError(f"Contact you are trying to update not found: {name}")
@@ -41,7 +41,7 @@ def delete_field(address_book: AddressBook) -> Command:
             command (list[str]): The command to execute.
             First element is the name of the contact, second element is the field type.
         """
-        name, field_type = command[1:]
+        name, field_type = command[0], command[1]
         record = address_book.find(name)
 
         match field_type:

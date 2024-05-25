@@ -5,7 +5,7 @@ from commands.event import Event, EventType
 class MissingArgumentsError(Exception):
     """Exception raised when the command is missing arguments."""
     def __init__(self, message):
-        self.message = f"Missing arguments: {message}"
+        self.message = f"Missing some arguments: {message}"
         super().__init__(self.message)
 
 
