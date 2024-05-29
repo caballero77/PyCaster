@@ -9,6 +9,7 @@ from .show_all import show_all
 from .show_birthday import show_birthday
 from .show_phone import show_phone
 from .wipe_contact import wipe_contact
+from .search import search
 from storage.address_book import AddressBook
 
 def commands(address_book: AddressBook) :
@@ -23,5 +24,6 @@ def commands(address_book: AddressBook) :
         show_all(address_book),
         show_birthday(address_book),
         show_phone(address_book),
-        wipe_contact(address_book)
+        wipe_contact(address_book),
+        search(address_book)
     ]
